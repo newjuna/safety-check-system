@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>전국 매장 안전점검 시스템</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="badge">ASUNG DAISO SAFETY CHECK</p>
+        <h1>전국 매장 안전점검 시스템</h1>
+        <p class="subtitle">
+          매장 내 주요 위험요인을 확인하고, 개선이 필요한 사항을 안전보건팀으로 제출해주세요.
+        </p>
+      </div>
+    </section>
+
+    <form id="inspectionForm" class="card">
+      <section class="form-section">
+        <h2>1. 기본정보</h2>
+
+        <div class="grid">
+          <label>
+            지역
+            <input type="text" name="region" placeholder="예: 서울 / 경기 / 부산" required />
+          </label>
+
+          <label>
+            팀
+            <input type="text" name="team" placeholder="예: 강남팀" required />
+          </label>
+
+          <label>
+            매장명
+            <input type="text" name="storeName" placeholder="예: 강남역점" required />
+          </label>
+
+          <label>
+            점검자
+            <input type="text" name="checker" placeholder="성명 입력" required />
+          </label>
+        </div>
+
+        <label>
+          점검구분
+          <select name="checkType" required>
+            <option value="">선택해주세요</option>
+            <option value="정기점검">정기점검</option>
+            <option value="수시점검">수시점검</option>
+            <option value="자율점검">자율점검</option>
+            <option value="기타">기타</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="form-section">
+        <h2>2. 점검항목</h2>
+
+        <div class="check-list">
+          <div class="check-item">
+            <strong>통로 적재 상태</strong>
+            <p>매장 통로, 비상통로, 후방공간에 상품이나 박스가 과도하게 적치되어 있지 않은가?</p>
+            <div class="radio-group">
+              <label><input type="radio" name="aisleStatus" value="양호" required /> 양호</label>
+              <label><input type="radio" name="aisleStatus" value="미흡" /> 미흡</label>
+              <label><input type="radio" name="aisleStatus" value="해당없음" /> 해당없음</label>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <strong>사다리·작업발판 상태</strong>
+            <p>사다리, 작업발판의 파손·흔들림·미끄럼 위험이 없는가?</p>
+            <div class="radio-group">
+              <label><input type="radio" name="ladderStatus" value="양호" required /> 양호</label>
+              <label><input type="radio" name="ladderStatus" value="미흡" /> 미흡</label>
+              <label><input type="radio" name="ladderStatus" value="해당없음" /> 해당없음</label>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <strong>소화기 주변 상태</strong>
+            <p>소화기 주변에 물건이 적치되어 있지 않고, 즉시 사용할 수 있는 상태인가?</p>
+            <div class="radio-group">
+              <label><input type="radio" name="fireStatus" value="양호" required /> 양호</label>
+              <label><input type="radio" name="fireStatus" value="미흡" /> 미흡</label>
+              <label><input type="radio" name="fireStatus" value="해당없음" /> 해당없음</label>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <strong>창고 정리 상태</strong>
+            <p>창고 내 상품 적재 상태가 안정적이며, 낙하·전도 위험이 없는가?</p>
+            <div class="radio-group">
+              <label><input type="radio" name="warehouseStatus" value="양호" required /> 양호</label>
+              <label><input type="radio" name="warehouseStatus" value="미흡" /> 미흡</label>
+              <label><input type="radio" name="warehouseStatus" value="해당없음" /> 해당없음</label>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <strong>근골격계 부담 여부</strong>
+            <p>무거운 상품 운반, 반복 진열, 상·하단 작업 등 신체 부담이 큰 작업이 있는가?</p>
+            <div class="radio-group">
+              <label><input type="radio" name="muscleRisk" value="낮음" required /> 낮음</label>
+              <label><input type="radio" name="muscleRisk" value="보통" /> 보통</label>
+              <label><input type="radio" name="muscleRisk" value="높음" /> 높음</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>3. 개선 필요사항</h2>
+
+        <label>
+          개선 필요 여부
+          <select name="needImprove" required>
+            <option value="">선택해주세요</option>
+            <option value="없음">없음</option>
+            <option value="있음">있음</option>
+          </select>
+        </label>
+
+        <label>
+          개선 필요사항
+          <textarea name="improveDetail" rows="4" placeholder="예: 후방 창고 박스 적재 높이 조정 필요"></textarea>
+        </label>
+
+        <label>
+          비고
+          <textarea name="memo" rows="3" placeholder="추가 의견이 있으면 작성해주세요."></textarea>
+        </label>
+      </section>
+
+      <button type="submit" id="submitBtn">점검표 제출하기</button>
+
+      <p id="resultMessage" class="result"></p>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
