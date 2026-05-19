@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = '1pbpCs3e5q-qM9Sgca7EOlsBflprBgFUjWHPCuXvfX6Y';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4z4If6KBD4pEoyOFLgPFLo60e0CLZitB3tzxOQM3mpVkohWHJvyKNSEIb-EsxmmkF/exec';
 
 const form = document.getElementById('inspectionForm');
 const submitBtn = document.getElementById('submitBtn');
