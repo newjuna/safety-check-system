@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxML2CG7yx_Fo1XdiG04wZi9Os8_mJInRJ5ROSxJ2ymRm6wL3jf0AVTi-EYi0lVCE2-/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4z4If6KBD4pEoyOFLgPFLo60e0CLZitB3tzxOQM3mpVkohWHJvyKNSEIb-EsxmmkF/exec';
 
 const form = document.getElementById('inspectionForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -25,22 +25,19 @@ form.addEventListener('submit', function (event) {
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: params.toString()
+    body: params
   })
-    .then(() => {
-      resultMessage.textContent = '제출 요청이 완료되었습니다. 구글시트 반영 여부를 확인해주세요.';
+    .then(function () {
+      resultMessage.textContent = '제출 요청이 완료되었습니다. 구글시트를 확인해주세요.';
       resultMessage.classList.add('success');
       form.reset();
     })
-    .catch((error) => {
+    .catch(function (error) {
       console.error(error);
       resultMessage.textContent = '제출 중 오류가 발생했습니다. 다시 시도해주세요.';
       resultMessage.classList.add('error');
     })
-    .finally(() => {
+    .finally(function () {
       submitBtn.disabled = false;
       submitBtn.textContent = '점검표 제출하기';
     });
