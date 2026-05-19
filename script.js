@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4z4If6KBD4pEoyOFLgPFLo60e0CLZitB3tzxOQM3mpVkohWHJvyKNSEIb-EsxmmkF/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzhYkIb6XqzZf9aB3tNvaxaCWy01NrP8kVA4WG-T5OQh_HjWY4wpRXC0YSxMA331UUa/exec';
 
 const form = document.getElementById('inspectionForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -16,19 +16,17 @@ form.addEventListener('submit', function (event) {
   const formData = new FormData(form);
   const params = new URLSearchParams();
 
+  params.append('mode', 'submit');
+
   for (const [key, value] of formData.entries()) {
     params.append(key, value);
   }
 
   params.append('userAgent', navigator.userAgent);
 
-  fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: params
-  })
-    .then(function () {
-      resultMessage.textContent = '제출 요청이 완료되었습니다. 구글시트를 확인해주세요.';
+  submitByJsonp(params)
+    .then(function (data) {
+      resultMessage.textContent = '제출이 완료되었습니다. 감사합니다.';
       resultMessage.classList.add('success');
       form.reset();
     })
@@ -42,3 +40,45 @@ form.addEventListener('submit', function (event) {
       submitBtn.textContent = '점검표 제출하기';
     });
 });
+
+function submitByJsonp(params) {
+  return new Promise(function (resolve, reject) {
+    const callbackName = 'callback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+
+    params.append('callback', callbackName);
+
+    const script = document.createElement('script');
+    script.src = APPS_SCRIPT_URL + '?' + params.toString();
+
+    const timer = setTimeout(function () {
+      cleanup();
+      reject(new Error('제출 시간이 초과되었습니다.'));
+    }, 20000);
+
+    window[callbackName] = function (data) {
+      cleanup();
+
+      if (data && data.success) {
+        resolve(data);
+      } else {
+        reject(new Error(data && data.message ? data.message : '저장 실패'));
+      }
+    };
+
+    script.onerror = function () {
+      cleanup();
+      reject(new Error('스크립트 호출 실패'));
+    };
+
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[callbackName];
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    }
+
+    document.body.appendChild(script);
+  });
+}
