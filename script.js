@@ -26,13 +26,15 @@ form.addEventListener('submit', function (event) {
 
   submitByJsonp(params)
     .then(function (data) {
-      resultMessage.textContent = '제출이 완료되었습니다. 감사합니다.';
+      resultMessage.textContent =
+        '제출 완료: ' + data.saveType + ' / ' + (data.storeName || '매장명 없음');
+
       resultMessage.classList.add('success');
       form.reset();
     })
     .catch(function (error) {
       console.error(error);
-      resultMessage.textContent = '제출 중 오류가 발생했습니다. 다시 시도해주세요.';
+      resultMessage.textContent = '제출 중 오류 발생: ' + error.message;
       resultMessage.classList.add('error');
     })
     .finally(function () {
